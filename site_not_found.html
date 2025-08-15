@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>站点不存在 · Site Not Found</title>
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="未在服务器上找到与该域名/IP 匹配的站点。" />
+  <style>
+    :root{
+      --bg:#dae6fe;
+      --card:#0f1724cc;
+      --txt:#d6e3ff;
+      --muted:#9bb0d9;
+      --accent1:#4fc3f7; /* cyan */
+      --accent2:#7c4dff; /* purple */
+      --accent3:#00e5ff; /* neon */
+      --ok:#00d59b;
+      --warn:#ffb74d;
+      --err:#ff6e6e;
+      --radius:22px;
+      --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color:var(--txt);
+      background: radial-gradient(1200px 800px at 85% -10%, rgba(124,77,255,.25), transparent 60%),
+                  radial-gradient(1000px 700px at -10% 110%, rgba(79,195,247,.22), transparent 60%),
+                  var(--bg);
+      overflow:hidden;
+    }
+
+    /* Animated grid background */
+    .grid{
+      position:fixed; inset:0; pointer-events:none; opacity:.22;
+      background-image: linear-gradient(transparent 31px, rgba(255,255,255,.06) 32px),
+                        linear-gradient(90deg, transparent 31px, rgba(255,255,255,.06) 32px);
+      background-size:32px 32px, 32px 32px;
+      mask-image: radial-gradient(70% 70% at 50% 40%, black 60%, transparent 100%);
+      animation: drift 26s linear infinite;
+    }
+    @keyframes drift{ from{background-position:0 0, 0 0} to{background-position:256px 256px, 256px 256px} }
+
+    .wrap{
+      position:relative; z-index:1; height:100%; display:grid; place-items:center; padding:24px;
+    }
+
+    .card{
+      width:min(860px, 92vw);
+      background: linear-gradient(135deg, rgba(16,24,40,.7), rgba(16,24,40,.45)) padding-box,
+                  linear-gradient(135deg, rgba(79,195,247,.55), rgba(124,77,255,.55)) border-box;
+      border:1px solid transparent;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      overflow:hidden;
+    }
+
+    .header{
+      display:flex; align-items:center; gap:14px; padding:22px 24px; border-bottom:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(90deg, rgba(124,77,255,.12), transparent);
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; font-weight:600; letter-spacing:.2px;
+      background:rgba(0,229,255,.08); border:1px solid rgba(0,229,255,.35);
+      box-shadow: inset 0 0 12px rgba(0,229,255,.25);
+    }
+    .badge svg{ width:18px; height:18px; }
+
+    h1{ margin:0; font-size:clamp(22px, 2.4vw, 30px); font-weight:800; letter-spacing:.2px; }
+    .sub{ color:var(--muted); margin-top:6px; font-size:clamp(14px, 1.5vw, 16px) }
+
+    .content{ padding:20px 24px 6px 24px; display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; }
+    @media (max-width: 860px){ .content{ grid-template-columns: 1fr; } }
+
+    .panel{
+      background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:18px; box-shadow:var(--shadow);
+    }
+
+    .panel h2{ margin:0 0 10px 0; font-size:16px; letter-spacing:.3px; color:#e7eeff; }
+    .list{ margin:0; padding:0 0 0 18px; line-height:1.75; color:#c7d6ff; }
+
+    .kv{ display:grid; grid-template-columns: 120px 1fr; gap:10px 14px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px; color:#cfe1ff; }
+    .kv div{ opacity:.92 }
+    .code{
+      background:#0a1222; border:1px solid rgba(124,77,255,.35); border-radius:14px; padding:14px; box-shadow:inset 0 0 24px rgba(124,77,255,.15);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:13px; color:#cfe1ff; overflow:auto; max-height:180px;
+    }
+
+    .actions{ display:flex; flex-wrap:wrap; gap:12px; padding:16px 24px 24px 24px; border-top:1px solid rgba(255,255,255,.06); }
+    button, a.btn{
+      appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:999px; font-weight:700; letter-spacing:.3px; text-decoration:none; color:white;
+      background:linear-gradient(135deg, var(--accent1), var(--accent2)); box-shadow: 0 8px 22px rgba(124,77,255,.35);
+      transition: transform .1s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    button:hover, a.btn:hover{ transform: translateY(-1px); box-shadow:0 12px 26px rgba(124,77,255,.45) }
+    button:active, a.btn:active{ transform: translateY(0) scale(.99) }
+    .ghost{ background:transparent; border:1px solid rgba(255,255,255,.18); color:var(--txt); box-shadow:none }
+
+    .glow{
+      position:absolute; inset:auto auto -110px -110px; width:280px; height:280px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(0,229,255,.35), transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(124,77,255,.35), transparent 55%);
+      filter: blur(38px);
+      opacity:.8; pointer-events:none;
+      animation: pulse 6s ease-in-out infinite alternate;
+    }
+    @keyframes pulse{ from{ transform:translate3d(0,0,0) scale(1)} to{ transform:translate3d(18px,-10px,0) scale(1.08)} }
+
+    .footer{ text-align:center; color:#a9bee9; font-size:12px; padding:6px 0 14px; opacity:.8 }
+
+    .chip{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); margin:4px 8px 0 0; font-size:12px; color:#c9dcff }
+    .chip svg{ width:14px; height:14px }
+  </style>
+</head>
+<body>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="card" role="group" aria-labelledby="title">
+      <div class="header">
+        <span class="badge" title="错误代码">
+          <!-- hexagon alert icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/>
+            <path d="M12 7v6"/>
+            <circle cx="12" cy="16.5" r="1"/>
+          </svg>
+          S404 · 站点不存在
+        </span>
+        <div>
+          <h1 id="title">没有找到与该域名 / IP 匹配的站点</h1>
+          <div class="sub">服务器未识别此请求。该站点可能尚未配置、配置未生效，或端口/代理设置不正确。</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <section class="panel" aria-labelledby="for-users">
+          <h2 id="for-users">我是普通访问者，可以做什么？</h2>
+          <ul class="list">
+            <li>请确认地址是否输入正确，或稍后再试。</li>
+            <li>如果是从外部链接进入，链接可能已失效。</li>
+            <li>若问题持续，请联系网站管理员反馈此页面与时间。</li>
+          </ul>
+          <div class="chip" title="时间戳">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <span id="now">--:--</span>
+          </div>
+          <div class="chip" title="请求标识（示例，可替换为真实ID）">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
+            RID: <span id="rid">auto-xxxxxxxx</span>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="for-admins">
+          <h2 id="for-admins">我是站点维护者，如何排查？</h2>
+          <div class="kv" aria-label="troubleshoot-steps">
+            <div>域名/绑定</div>
+            <div>确认域名或 IP 已绑定到正确站点（含 <code>www</code> / 泛域名）。</div>
+            <div>端口</div>
+            <div>站点监听端口与访问端口一致（例如 <code>80/443</code>）。</div>
+            <div>证书/HTTPS</div>
+            <div>若强制 HTTPS，确保证书有效，HTTP→HTTPS 跳转正常。</div>
+            <div>反向代理</div>
+            <div>检查网关 / CDN / 代理转发的 Host 和端口是否正确。</div>
+            <div>配置生效</div>
+            <div>变更后重载 Web 服务并清理 CDN/浏览器缓存。</div>
+          </div>
+                  </section>
+      </div>
+
+      <div class="actions">
+        <button id="retryBtn" aria-label="刷新页面">立即重试</button>
+        <a class="btn" href="/" aria-label="返回站点首页（若已配置）">返回首页</a>
+        <a class="btn ghost" href="mailto:admin@example.com?subject=站点不存在%20S404&body=请协助排查，页面显示站点不存在。时间：{time}%0D%0A请求ID：{rid}" id="mailBtn" aria-label="联系管理员">联系管理员</a>
+      </div>
+
+      <div class="footer">如果您是站点所有者，请将此页面替换为您的正式站点；如果您是访问者，请稍后再试或联系管理员。</div>
+      <div class="glow" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+    // 实用脚本：时间戳、随机请求ID、按钮行为
+    (function(){
+      const nowEl = document.getElementById('now');
+      const ridEl = document.getElementById('rid');
+      const mailBtn = document.getElementById('mailBtn');
+
+      const now = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      const timeStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      nowEl.textContent = timeStr;
+
+      const rand = (len=8)=>Array.from(crypto.getRandomValues(new Uint8Array(len))).map(x=>x.toString(16).padStart(2,'0')).join('').slice(0,len);
+      const rid = `S404-${rand(4)}-${rand(4)}-${rand(4)}`;
+      ridEl.textContent = rid;
+
+      // 更新 mailto 占位符
+      mailBtn.href = mailBtn.href.replace('{time}', encodeURIComponent(timeStr)).replace('{rid}', encodeURIComponent(rid));
+
+      // 重试按钮
+      document.getElementById('retryBtn').addEventListener('click', ()=> location.reload());
+
+      // 优雅降级：无 crypto 时提供简单随机
+      if(!window.crypto || !window.crypto.getRandomValues){ ridEl.textContent = `S404-${Math.random().toString(16).slice(2,6)}-${Math.random().toString(16).slice(2,6)}-${Math.random().toString(16).slice(2,6)}` }
+    })();
+  </script>
+</body>
+</html>
